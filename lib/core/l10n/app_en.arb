@@ -1,0 +1,270 @@
+{
+    "muscleGroupAll": "All",
+    "muscleGroupChest": "Chest",
+    "muscleGroupBack": "Back",
+    "muscleGroupLegs": "Legs",
+    "muscleGroupShoulders": "Shoulders",
+    "muscleGroupArms": "Arms",
+    "muscleGroupAbs": "Abs",
+    "muscleGroupGlutes": "Glutes",
+    "categorySelectHint": "Select Category",
+    "categoryLabel": "Category",
+    "appName": "Weight Tracker",
+    "@appName": {
+        "description": "The name of the application"
+    },
+    "save": "Save",
+    "@save": {
+        "description": "Save button text"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Cancel button text"
+    },
+    "delete": "Delete",
+    "@delete": {
+        "description": "Delete button text"
+    },
+    "edit": "Edit",
+    "@edit": {
+        "description": "Edit button text"
+    },
+    "navHome": "Workout",
+    "@navHome": {
+        "description": "Navigation label for home/workout screen"
+    },
+    "navHistory": "History",
+    "@navHistory": {
+        "description": "Navigation label for history screen"
+    },
+    "navProfile": "Profile",
+    "@navProfile": {
+        "description": "Navigation label for profile screen"
+    },
+    "homeTitle": "Workouts",
+    "@homeTitle": {
+        "description": "Title for the home screen"
+    },
+    "noWorkouts": "No exercises added yet",
+    "@noWorkouts": {
+        "description": "Message shown when no exercises are available"
+    },
+    "kgFormat": "kg",
+    "@kgFormat": {
+        "description": "Weight unit format"
+    },
+    "setFormat": "set",
+    "@setFormat": {
+        "description": "Set unit format"
+    },
+    "repFormat": "rep",
+    "@repFormat": {
+        "description": "Repetition unit format"
+    },
+    "addWorkout": "Add New Exercise",
+    "@addWorkout": {
+        "description": "Button text for adding a new exercise"
+    },
+    "exerciseName": "Exercise Name",
+    "@exerciseName": {
+        "description": "Label for exercise name input"
+    },
+    "exerciseHint": "Ex: Squat, Bench Press",
+    "@exerciseHint": {
+        "description": "Hint text for exercise name input"
+    },
+    "weight": "Weight",
+    "@weight": {
+        "description": "Label for weight input"
+    },
+    "weightHint": "Ex: 60.5",
+    "@weightHint": {
+        "description": "Hint text for weight input"
+    },
+    "sets": "Number of Sets",
+    "@sets": {
+        "description": "Label for sets input"
+    },
+    "setsHint": "Ex: 3",
+    "@setsHint": {
+        "description": "Hint text for sets input"
+    },
+    "reps": "Number of Reps",
+    "@reps": {
+        "description": "Label for reps input"
+    },
+    "repsHint": "Ex: 12",
+    "@repsHint": {
+        "description": "Hint text for reps input"
+    },
+    "notes": "Notes (Optional)",
+    "@notes": {
+        "description": "Label for notes input"
+    },
+    "notesHint": "Add your notes...",
+    "@notesHint": {
+        "description": "Hint text for notes input"
+    },
+    "category": "Category",
+    "@category": {
+        "description": "Label for category selection"
+    },
+    "selectCategory": "Select Category",
+    "@selectCategory": {
+        "description": "Prompt for category selection"
+    },
+    "selectExercise": "Select Exercise",
+    "@selectExercise": {
+        "description": "Prompt for exercise selection"
+    },
+    "selectExerciseFirst": "Please select an exercise first",
+    "@selectExerciseFirst": {
+        "description": "Message shown when exercise needs to be selected"
+    },
+    "setType": "Set Type",
+    "@setType": {
+        "description": "Label for set type selection"
+    },
+    "selectSetType": "Select Set Type",
+    "@selectSetType": {
+        "description": "Prompt for set type selection"
+    },
+    "historyTitle": "Workout History",
+    "@historyTitle": {
+        "description": "Title for the history screen"
+    },
+    "noHistory": "No workout history found",
+    "@noHistory": {
+        "description": "Message shown when no workout history is available"
+    },
+    "profileTitle": "Profile",
+    "@profileTitle": {
+        "description": "Title for the profile screen"
+    },
+    "statistics": "Statistics",
+    "@statistics": {
+        "description": "Label for statistics section"
+    },
+    "totalWorkouts": "Total Workouts",
+    "@totalWorkouts": {
+        "description": "Label for total workouts statistic"
+    },
+    "mostUsedExercise": "Most Used Exercise",
+    "@mostUsedExercise": {
+        "description": "Label for most used exercise statistic"
+    },
+    "maxWeight": "Max Weight",
+    "@maxWeight": {
+        "description": "Label for maximum weight statistic"
+    },
+    "requiredField": "This field is required",
+    "@requiredField": {
+        "description": "Validation message for required fields"
+    },
+    "enterValidNumber": "Please enter a valid number",
+    "@enterValidNumber": {
+        "description": "Validation message for number input"
+    },
+    "enterValidInteger": "Please enter a valid integer",
+    "@enterValidInteger": {
+        "description": "Validation message for integer input"
+    },
+    "searchExercise": "Search exercise...",
+    "@searchExercise": {
+        "description": "Hint text for exercise search"
+    },
+    "noExercisesFound": "No exercises found",
+    "@noExercisesFound": {
+        "description": "Message shown when no exercises are found"
+    },
+    "required": "This field is required",
+    "@required": {
+        "description": "Generic required field message"
+    },
+    "kg": "kg",
+    "@kg": {
+        "description": "Weight unit abbreviation"
+    },
+    "@muscleGroupAll": {
+        "description": "Label for all muscle groups option"
+    },
+    "@muscleGroupChest": {
+        "description": "Label for chest muscle group"
+    },
+    "@muscleGroupBack": {
+        "description": "Label for back muscle group"
+    },
+    "@muscleGroupLegs": {
+        "description": "Label for legs muscle group"
+    },
+    "@muscleGroupShoulders": {
+        "description": "Label for shoulders muscle group"
+    },
+    "@muscleGroupArms": {
+        "description": "Label for arms muscle group"
+    },
+    "@muscleGroupAbs": {
+        "description": "Label for abs muscle group"
+    },
+    "@muscleGroupGlutes": {
+        "description": "Label for glutes muscle group"
+    },
+    "@categorySelectHint": {
+        "description": "Hint text for category selection"
+    },
+    "@categoryLabel": {
+        "description": "Label for category field"
+    },
+    "noCategoryWorkouts": "No workouts found in this category",
+    "@noCategoryWorkouts": {
+        "description": "Message shown when no workouts are found in selected category"
+    },
+    "noCategoryWorkoutsDetail": "You don't have any workouts in the {category} category yet. Start by adding a new workout.",
+    "@noCategoryWorkoutsDetail": {
+        "description": "Detailed message shown when no workouts are found in selected category",
+        "placeholders": {
+            "category": {
+                "type": "String",
+                "example": "Chest"
+            }
+        }
+    },
+    "noWorkoutsDetail": "You don't have any workouts yet. Start by adding a new workout.",
+    "@noWorkoutsDetail": {
+        "description": "Detailed message shown when no workouts are found"
+    },
+    "personalBest": "Record",
+    "@personalBest": {
+        "description": "Label for personal best record"
+    },
+    "totalSets": "Total: {count}",
+    "@totalSets": {
+        "description": "Label for total number of sets",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "42"
+            }
+        }
+    },
+    "editPersonalInfo": "Edit Personal Info",
+    "@editPersonalInfo": {
+        "description": "Button text for editing personal information"
+    },
+    "currentWeight": "Current Weight",
+    "@currentWeight": {
+        "description": "Label for current weight"
+    },
+    "targetWeight": "Target Weight",
+    "@targetWeight": {
+        "description": "Label for target weight"
+    },
+    "height": "Height",
+    "@height": {
+        "description": "Label for height"
+    },
+    "personalInfo": "Personal Info",
+    "@personalInfo": {
+        "description": "Title for personal information section"
+    }
+} 
