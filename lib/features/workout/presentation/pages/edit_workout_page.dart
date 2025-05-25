@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weight_tracker_app/product/models/set_model.dart'
+import 'package:overload_pro_app/product/models/set_model.dart'
     show SetModel, SetType, SetTypeExtension;
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
-import 'package:weight_tracker_app/core/mixins/localization_mixin.dart';
-import 'package:weight_tracker_app/features/workout/presentation/bloc/workout_bloc.dart';
-import 'package:weight_tracker_app/features/workout/presentation/bloc/workout_event.dart';
-import 'package:weight_tracker_app/features/workout/presentation/widgets/custom_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/core/mixins/localization_mixin.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_bloc.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_event.dart';
+import 'package:overload_pro_app/features/workout/presentation/widgets/custom_text_field.dart';
 
 class EditWorkoutPage extends StatefulWidget {
   const EditWorkoutPage({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/features/history/history_page.dart';
-import 'package:weight_tracker_app/features/main/main_page.dart';
-import 'package:weight_tracker_app/features/profile/presentation/screens/profile_page.dart';
-import 'package:weight_tracker_app/features/splash/splash_screen.dart';
-import 'package:weight_tracker_app/features/workout/presentation/pages/add_workout_page.dart';
-import 'package:weight_tracker_app/features/workout/presentation/pages/home_page.dart';
+import 'package:overload_pro_app/features/history/history_page.dart';
+import 'package:overload_pro_app/features/main/main_page.dart';
+import 'package:overload_pro_app/features/profile/presentation/screens/profile_page.dart';
+import 'package:overload_pro_app/features/splash/splash_screen.dart';
+import 'package:overload_pro_app/features/workout/presentation/pages/add_workout_page.dart';
+import 'package:overload_pro_app/features/workout/presentation/pages/home_page.dart';
 
 class AppRoutes {
   static const String splash = '/';

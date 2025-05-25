@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/constants/app_constants.dart';
-import 'package:weight_tracker_app/core/router/app_routes.dart';
-import 'package:weight_tracker_app/core/theme/app_theme.dart';
+import 'package:overload_pro_app/core/constants/app_constants.dart';
+import 'package:overload_pro_app/core/router/app_routes.dart';
+import 'package:overload_pro_app/core/theme/app_theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

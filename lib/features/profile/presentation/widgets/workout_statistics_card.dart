@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
-import 'package:weight_tracker_app/product/models/set_model.dart';
-import 'package:weight_tracker_app/features/exercise/data/repositories/exercise_repository.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/product/models/set_model.dart';
+import 'package:overload_pro_app/features/exercise/data/repositories/exercise_repository.dart';
 
 class WorkoutStatisticsCard extends StatelessWidget {
   const WorkoutStatisticsCard({

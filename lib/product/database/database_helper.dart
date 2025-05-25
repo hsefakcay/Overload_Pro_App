@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:weight_tracker_app/product/models/set_model.dart';
+import 'package:overload_pro_app/product/models/set_model.dart';
 import 'package:flutter/foundation.dart';
 
 class DatabaseHelper {

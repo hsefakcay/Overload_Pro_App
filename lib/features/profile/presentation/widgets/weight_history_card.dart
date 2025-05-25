@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
-import 'package:weight_tracker_app/product/models/weight_record_model.dart';
-import 'package:weight_tracker_app/product/models/user_profile_model.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/product/models/weight_record_model.dart';
+import 'package:overload_pro_app/product/models/user_profile_model.dart';
 
 class WeightHistoryCard extends StatelessWidget {
   const WeightHistoryCard({

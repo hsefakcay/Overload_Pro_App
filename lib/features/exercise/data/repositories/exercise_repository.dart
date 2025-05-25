@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/generated/l10n/app_localizations.dart';
-import '../../../../product/models/exercise_model.dart';
+import 'package:overload_pro_app/core/generated/l10n/app_localizations.dart';
+import 'package:overload_pro_app/product/models/exercise_model.dart';
 
 @immutable
 class ExerciseRepository {

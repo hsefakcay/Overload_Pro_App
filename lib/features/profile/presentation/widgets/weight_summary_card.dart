@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
-import 'package:weight_tracker_app/product/models/user_profile_model.dart';
-import 'package:weight_tracker_app/product/models/weight_record_model.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/product/models/user_profile_model.dart';
+import 'package:overload_pro_app/product/models/weight_record_model.dart';
 
 class WeightSummaryCard extends StatelessWidget {
   const WeightSummaryCard({
     required this.profile,
     required this.weightRecords,
-    required this.onWeightTap,
-    required this.onTargetWeightTap,
-    required this.onHeightTap,
     required this.onBMITap,
     super.key,
   });
   final UserProfileModel profile;
   final List<WeightRecordModel> weightRecords;
-  final Function(double) onWeightTap;
-  final Function(double) onTargetWeightTap;
-  final Function(double) onHeightTap;
+
   final Function(double) onBMITap;
 
   @override
@@ -40,7 +35,6 @@ class WeightSummaryCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 GestureDetector(
-                  onTap: () => onWeightTap(latestWeight),
                   child: _buildWeightStat(
                     context,
                     'Güncel Kilo',
@@ -50,7 +44,6 @@ class WeightSummaryCard extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => onTargetWeightTap(profile.targetWeight),
                   child: _buildWeightStat(
                     context,
                     'Hedef Kilo',
@@ -60,7 +53,6 @@ class WeightSummaryCard extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => onHeightTap(profile.height),
                   child: _buildWeightStat(
                     context,
                     'Boy',

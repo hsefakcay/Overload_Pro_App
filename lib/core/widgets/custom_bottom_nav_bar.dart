@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
-import 'package:weight_tracker_app/core/mixins/localization_mixin.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/core/mixins/localization_mixin.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({

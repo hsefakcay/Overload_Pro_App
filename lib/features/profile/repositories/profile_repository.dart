@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weight_tracker_app/product/models/user_profile_model.dart';
-import 'package:weight_tracker_app/product/models/weight_record_model.dart';
+import 'package:overload_pro_app/product/models/user_profile_model.dart';
+import 'package:overload_pro_app/product/models/weight_record_model.dart';
 
 /// Repository for managing user profile and weight records in local storage.
 class ProfileRepository {
@@ -15,8 +15,7 @@ class ProfileRepository {
   Future<UserProfileModel?> getProfile() async {
     final profileJson = _prefs.getString(_profileKey);
     if (profileJson != null) {
-      return UserProfileModel.
-      fromJson(json.decode(profileJson) as Map<String, dynamic>);
+      return UserProfileModel.fromJson(json.decode(profileJson) as Map<String, dynamic>);
     }
     return null;
   }

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:weight_tracker_app/product/models/exercise_model.dart';
+import 'package:overload_pro_app/product/models/exercise_model.dart';
 
 enum SetType {
   warmUp,
@@ -24,16 +24,6 @@ extension SetTypeExtension on SetType {
 }
 
 class SetModel extends Equatable {
-  final String id;
-  final double weight;
-  final ExerciseModel exercise;
-  final int reps;
-  final SetType setType;
-  final int? order;
-  final bool isCompleted;
-  final String? notes;
-  final DateTime? completedAt;
-
   const SetModel({
     required this.id,
     required this.weight,
@@ -45,6 +35,47 @@ class SetModel extends Equatable {
     this.notes,
     this.completedAt,
   });
+
+  factory SetModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return const SetModel(
+        id: '',
+        weight: 0,
+        reps: 0,
+        setType: SetType.warmUp,
+        exercise: ExerciseModel(
+          id: '',
+          name: 'Unknown Exercise',
+        ),
+      );
+    }
+    return SetModel(
+      id: json['id']?.toString() ?? '',
+      weight: (json['weight'] as num?)?.toDouble() ?? 0.0,
+      reps: json['reps'] as int? ?? 0,
+      setType: SetType.values[json['setType'] as int? ?? 0],
+      order: json['order'] as int?,
+      isCompleted: json['isCompleted'] as bool? ?? false,
+      notes: json['notes']?.toString(),
+      completedAt:
+          json['completedAt'] != null ? DateTime.tryParse(json['completedAt'].toString()) : null,
+      exercise: json['exercise'] != null
+          ? ExerciseModel.fromJson(json['exercise'] as Map<String, dynamic>?)
+          : const ExerciseModel(
+              id: '',
+              name: 'Unknown Exercise',
+            ),
+    );
+  }
+  final String id;
+  final double weight;
+  final ExerciseModel exercise;
+  final int reps;
+  final SetType setType;
+  final int? order;
+  final bool isCompleted;
+  final String? notes;
+  final DateTime? completedAt;
 
   @override
   List<Object?> get props =>
@@ -71,40 +102,6 @@ class SetModel extends Equatable {
       notes: notes ?? this.notes,
       completedAt: completedAt ?? this.completedAt,
       exercise: exercise ?? this.exercise,
-    );
-  }
-
-  factory SetModel.fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return const SetModel(
-        id: '',
-        weight: 0.0,
-        reps: 0,
-        setType: SetType.warmUp,
-        exercise: ExerciseModel(
-          id: '',
-          name: 'Unknown Exercise',
-          isCustom: false,
-        ),
-      );
-    }
-    return SetModel(
-      id: json['id']?.toString() ?? '',
-      weight: (json['weight'] as num?)?.toDouble() ?? 0.0,
-      reps: json['reps'] as int? ?? 0,
-      setType: SetType.values[json['setType'] as int? ?? 0],
-      order: json['order'] as int?,
-      isCompleted: json['isCompleted'] as bool? ?? false,
-      notes: json['notes']?.toString(),
-      completedAt:
-          json['completedAt'] != null ? DateTime.tryParse(json['completedAt'].toString()) : null,
-      exercise: json['exercise'] != null
-          ? ExerciseModel.fromJson(json['exercise'] as Map<String, dynamic>?)
-          : const ExerciseModel(
-              id: '',
-              name: 'Unknown Exercise',
-              isCustom: false,
-            ),
     );
   }
 

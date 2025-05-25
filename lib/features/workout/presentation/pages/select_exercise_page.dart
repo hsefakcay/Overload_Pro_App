@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/mixins/localization_mixin.dart';
-import '../../../../core/extensions/context_extension.dart';
-import '../../../../product/models/exercise_model.dart';
-import '../../../exercise/data/repositories/exercise_repository.dart';
-import '../../../../core/constants/color_constants.dart';
-import '../widgets/custom_dropdown.dart';
+import 'package:overload_pro_app/core/mixins/localization_mixin.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/product/models/exercise_model.dart';
+import 'package:overload_pro_app/features/exercise/data/repositories/exercise_repository.dart';
+import 'package:overload_pro_app/core/constants/color_constants.dart';
+import 'package:overload_pro_app/features/workout/presentation/widgets/custom_dropdown.dart';
 
 class SelectExercisePage extends StatefulWidget {
   const SelectExercisePage({super.key});
@@ -26,19 +26,20 @@ class _SelectExercisePageState extends State<SelectExercisePage> with Localizati
   }
 
   List<ExerciseModel> _getFilteredExercises() {
-    List<ExerciseModel> exercises =
-        _selectedCategory != null && _selectedCategory != l10n.muscleGroupAll
-            ? _exerciseRepository.getExercisesByMuscleGroup(_selectedCategory!, context)
-            : _exerciseRepository.getAllExercises();
+    var exercises = _selectedCategory != null && _selectedCategory != l10n.muscleGroupAll
+        ? _exerciseRepository.getExercisesByMuscleGroup(_selectedCategory!, context)
+        : _exerciseRepository.getAllExercises();
 
     if (_searchQuery.isNotEmpty) {
       exercises = exercises
-          .where((exercise) =>
-              exercise.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-              (_exerciseRepository
-                  .getMuscleGroupTranslation(context, exercise.muscleGroup ?? '')
-                  .toLowerCase()
-                  .contains(_searchQuery.toLowerCase())))
+          .where(
+            (exercise) =>
+                exercise.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+                (_exerciseRepository
+                    .getMuscleGroupTranslation(context, exercise.muscleGroup ?? '')
+                    .toLowerCase()
+                    .contains(_searchQuery.toLowerCase())),
+          )
           .toList();
     }
 
@@ -127,7 +128,7 @@ class _SelectExercisePageState extends State<SelectExercisePage> with Localizati
             horizontal: context.lowValue,
             vertical: context.lowValue / 2,
           ),
-          child: Text(category ?? ""),
+          child: Text(category ?? ''),
         ),
       );
     }
@@ -151,7 +152,7 @@ class _SelectExercisePageState extends State<SelectExercisePage> with Localizati
               ),
             ),
             SizedBox(width: context.lowValue),
-            Text(category ?? ""),
+            Text(category ?? ''),
           ],
         ),
       ),
@@ -192,9 +193,11 @@ class _SelectExercisePageState extends State<SelectExercisePage> with Localizati
 
   Widget _buildExerciseItem(ExerciseModel exercise) {
     final muscleGroupColor = MuscleGroupColors.getColorForMuscleGroup(
-        _exerciseRepository.getMuscleGroupTranslation(context, exercise.muscleGroup ?? ''));
+      _exerciseRepository.getMuscleGroupTranslation(context, exercise.muscleGroup ?? ''),
+    );
     final lightColor = MuscleGroupColors.getLightColorForMuscleGroup(
-        _exerciseRepository.getMuscleGroupTranslation(context, exercise.muscleGroup ?? ''));
+      _exerciseRepository.getMuscleGroupTranslation(context, exercise.muscleGroup ?? ''),
+    );
 
     return Card(
       margin: EdgeInsets.only(bottom: context.lowValue),
@@ -203,7 +206,7 @@ class _SelectExercisePageState extends State<SelectExercisePage> with Localizati
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Image.asset(
-            exercise.imageUrl ?? "",
+            exercise.imageUrl ?? '',
             width: 50,
             height: 50,
             fit: BoxFit.cover,

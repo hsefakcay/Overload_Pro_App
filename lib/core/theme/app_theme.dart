@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/constants/app_constants.dart';
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/core/constants/app_constants.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
 
 @immutable
 class AppTheme {

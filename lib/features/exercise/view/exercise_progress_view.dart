@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weight_tracker_app/product/models/set_model.dart';
-import '../../../core/extensions/context_extension.dart';
-import '../widgets/exercise_progress_chart.dart';
-import '../../workout/presentation/bloc/workout_bloc.dart';
-import '../../workout/presentation/bloc/workout_state.dart';
-import '../../workout/presentation/bloc/workout_event.dart';
+import 'package:overload_pro_app/product/models/set_model.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/features/exercise/widgets/exercise_progress_chart.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_bloc.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_state.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_event.dart';
 
 class ExerciseProgressView extends StatelessWidget {
-  final String exerciseId;
-  final String exerciseName;
-
   const ExerciseProgressView({
-    Key? key,
     required this.exerciseId,
     required this.exerciseName,
-  }) : super(key: key);
+    super.key,
+  });
+  final String exerciseId;
+  final String exerciseName;
 
   @override
   Widget build(BuildContext context) {

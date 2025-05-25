@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:weight_tracker_app/core/mixins/localization_mixin.dart';
-import 'package:weight_tracker_app/product/models/set_model.dart';
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/core/mixins/localization_mixin.dart';
+import 'package:overload_pro_app/product/models/set_model.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
 import 'package:intl/intl.dart';
 
 class ExerciseProgressChart extends StatefulWidget {

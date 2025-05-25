@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
-import 'package:weight_tracker_app/product/models/user_profile_model.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/product/models/user_profile_model.dart';
 
 class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({
@@ -15,6 +15,7 @@ class ProfileAppBar extends StatelessWidget {
       expandedHeight: 200,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
         title: Text(
           profile.name,
           style: context.titleMedium.copyWith(
@@ -29,7 +30,7 @@ class ProfileAppBar extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors: [
                 Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor.withOpacity(0.8),
+                Theme.of(context).primaryColor.withOpacity(0.7),
               ],
             ),
           ),

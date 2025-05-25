@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:weight_tracker_app/core/extensions/context_extension.dart';
-import 'package:weight_tracker_app/core/generated/l10n/app_localizations.dart';
-import 'package:weight_tracker_app/features/workout/presentation/bloc/workout_bloc.dart';
-import 'package:weight_tracker_app/features/workout/presentation/bloc/workout_event.dart';
-import 'package:weight_tracker_app/features/workout/presentation/bloc/workout_state.dart';
-import 'package:weight_tracker_app/product/di/locator.dart';
-import 'package:weight_tracker_app/features/profile/bloc/profile_bloc.dart';
-import 'package:weight_tracker_app/features/profile/bloc/profile_event.dart';
-import 'package:weight_tracker_app/features/profile/bloc/profile_state.dart';
-import 'package:weight_tracker_app/features/profile/presentation/dialogs/profile_dialogs.dart';
-import 'package:weight_tracker_app/features/profile/presentation/widgets/profile_app_bar.dart';
-import 'package:weight_tracker_app/features/profile/presentation/widgets/weight_history_card.dart';
-import 'package:weight_tracker_app/features/profile/presentation/widgets/weight_summary_card.dart';
-import 'package:weight_tracker_app/features/profile/presentation/widgets/workout_statistics_card.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/core/generated/l10n/app_localizations.dart';
+import 'package:overload_pro_app/core/theme/theme_bloc.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_bloc.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_event.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_state.dart';
+import 'package:overload_pro_app/product/di/locator.dart';
+import 'package:overload_pro_app/features/profile/bloc/profile_bloc.dart';
+import 'package:overload_pro_app/features/profile/bloc/profile_event.dart';
+import 'package:overload_pro_app/features/profile/bloc/profile_state.dart';
+import 'package:overload_pro_app/features/profile/presentation/dialogs/profile_dialogs.dart';
+import 'package:overload_pro_app/features/profile/presentation/widgets/profile_app_bar.dart';
+import 'package:overload_pro_app/features/profile/presentation/widgets/weight_history_card.dart';
+import 'package:overload_pro_app/features/profile/presentation/widgets/weight_summary_card.dart';
+import 'package:overload_pro_app/features/profile/presentation/widgets/workout_statistics_card.dart';
 import 'dart:async';
 
 class ProfilePage extends StatelessWidget {
@@ -61,25 +61,49 @@ class ProfilePage extends StatelessWidget {
                           WeightSummaryCard(
                             profile: state.profile,
                             weightRecords: state.weightRecords,
-                            onWeightTap: (weight) => _showWeightSettingDialog(context, weight),
-                            onTargetWeightTap: (targetWeight) =>
-                                _showTargetWeightDialog(context, targetWeight),
-                            onHeightTap: (height) => _showHeightSettingDialog(context, height),
                             onBMITap: (bmi) => _showBMIInfoDialog(context, bmi),
                           ),
                           SizedBox(height: context.mediumValue),
-                          ElevatedButton.icon(
-                            onPressed: () => _showPersonalInfoDialog(context, state),
-                            icon: const Icon(Icons.edit),
-                            label: const Text('Kişisel Bilgileri Düzenle'),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                          Card(
+                            child: ListTile(
+                              leading: const Icon(Icons.edit),
+                              title: const Text('Kişisel Bilgileri Düzenle'),
+                              onTap: () {},
                             ),
                           ),
-                          SizedBox(height: context.mediumValue),
+                          Card(
+                            child: ListTile(
+                              leading: const Icon(Icons.monitor_weight_rounded),
+                              title: const Text('Kilo Takibi'),
+                              onTap: () {},
+                            ),
+                          ),
+                          SizedBox(height: context.lowValue),
+                          BlocBuilder<ThemeBloc, ThemeState>(
+                            builder: (context, themeState) {
+                              return Card(
+                                child: ListTile(
+                                  leading: Icon(
+                                    themeState is ThemeLoaded && themeState.isDarkMode
+                                        ? Icons.dark_mode
+                                        : Icons.light_mode,
+                                  ),
+                                  title: Text(
+                                    themeState is ThemeLoaded && themeState.isDarkMode
+                                        ? 'Dark Mode'
+                                        : 'Light Mode',
+                                  ),
+                                  trailing: Switch(
+                                    value: themeState is ThemeLoaded && themeState.isDarkMode,
+                                    onChanged: (value) {
+                                      context.read<ThemeBloc>().add(ToggleTheme());
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: context.lowValue),
                           BlocBuilder<WorkoutBloc, WorkoutState>(
                             builder: (context, workoutState) {
                               if (workoutState is WorkoutLoaded) {
@@ -112,94 +136,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  void _showWeightSettingDialog(BuildContext context, double currentWeight) {
-    ProfileDialogs.showWeightSettingDialog(
-      context,
-      currentWeight: currentWeight,
-      onSave: (weight) {
-        context.read<ProfileBloc>().add(
-              UpdateProfile(
-                name: context.read<ProfileBloc>().state is ProfileLoaded
-                    ? (context.read<ProfileBloc>().state as ProfileLoaded).profile.name
-                    : '',
-                height: context.read<ProfileBloc>().state is ProfileLoaded
-                    ? (context.read<ProfileBloc>().state as ProfileLoaded).profile.height
-                    : 0,
-                targetWeight: weight,
-              ),
-            );
-      },
-    );
-  }
-
-  void _showTargetWeightDialog(BuildContext context, double currentTargetWeight) {
-    ProfileDialogs.showTargetWeightDialog(
-      context,
-      currentTargetWeight: currentTargetWeight,
-      onSave: (targetWeight) {
-        context.read<ProfileBloc>().add(
-              UpdateProfile(
-                name: context.read<ProfileBloc>().state is ProfileLoaded
-                    ? (context.read<ProfileBloc>().state as ProfileLoaded).profile.name
-                    : '',
-                height: context.read<ProfileBloc>().state is ProfileLoaded
-                    ? (context.read<ProfileBloc>().state as ProfileLoaded).profile.height
-                    : 0,
-                targetWeight: targetWeight,
-              ),
-            );
-      },
-    );
-  }
-
-  void _showHeightSettingDialog(BuildContext context, double currentHeight) {
-    ProfileDialogs.showHeightSettingDialog(
-      context,
-      currentHeight: currentHeight,
-      onSave: (height) {
-        context.read<ProfileBloc>().add(
-              UpdateProfile(
-                name: context.read<ProfileBloc>().state is ProfileLoaded
-                    ? (context.read<ProfileBloc>().state as ProfileLoaded).profile.name
-                    : '',
-                height: height,
-                targetWeight: context.read<ProfileBloc>().state is ProfileLoaded
-                    ? (context.read<ProfileBloc>().state as ProfileLoaded).profile.targetWeight
-                    : 0,
-              ),
-            );
-      },
-    );
-  }
-
   void _showBMIInfoDialog(BuildContext context, double bmi) {
     ProfileDialogs.showBMIInfoDialog(context, bmi);
-  }
-
-  void _showPersonalInfoDialog(BuildContext context, ProfileLoaded state) {
-    final latestWeight = state.weightRecords.isNotEmpty ? state.weightRecords.first.weight : 0.0;
-    ProfileDialogs.showPersonalInfoDialog(
-      context,
-      currentWeight: latestWeight,
-      targetWeight: state.profile.targetWeight,
-      height: state.profile.height,
-      onSave: (weight, targetWeight, height) {
-        context.read<ProfileBloc>().add(
-              UpdateProfile(
-                name: state.profile.name,
-                height: height,
-                targetWeight: targetWeight,
-              ),
-            );
-        if (weight != latestWeight) {
-          context.read<ProfileBloc>().add(
-                AddWeightRecord(
-                  weight: weight,
-                  note: 'Updated from personal info',
-                ),
-              );
-        }
-      },
-    );
   }
 }

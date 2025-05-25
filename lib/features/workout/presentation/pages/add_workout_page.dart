@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
-import 'package:weight_tracker_app/core/mixins/localization_mixin.dart';
-import 'package:weight_tracker_app/product/models/set_model.dart';
-import '../../../../core/extensions/context_extension.dart';
-import '../../../../product/models/exercise_model.dart';
-import '../../../exercise/data/repositories/exercise_repository.dart';
-import '../bloc/workout_bloc.dart';
-import '../bloc/workout_event.dart';
-import '../widgets/custom_text_field.dart';
-import '../widgets/custom_dropdown.dart';
-import 'select_exercise_page.dart';
+import 'package:overload_pro_app/core/mixins/localization_mixin.dart';
+import 'package:overload_pro_app/product/models/set_model.dart';
+import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/product/models/exercise_model.dart';
+import 'package:overload_pro_app/features/exercise/data/repositories/exercise_repository.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_bloc.dart';
+import 'package:overload_pro_app/features/workout/presentation/bloc/workout_event.dart';
+import 'package:overload_pro_app/features/workout/presentation/widgets/custom_text_field.dart';
+import 'package:overload_pro_app/features/workout/presentation/widgets/custom_dropdown.dart';
+import 'package:overload_pro_app/features/workout/presentation/pages/select_exercise_page.dart';
 
 class AddWorkoutPage extends StatefulWidget {
   const AddWorkoutPage({super.key});
@@ -38,7 +38,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> with LocalizationMixin 
     super.dispose();
   }
 
-  void _submitForm() async {
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate() && _selectedExercise != null) {
       setState(() {
         _isLoading = true;
@@ -86,7 +86,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> with LocalizationMixin 
         title: Text(l10n.addWorkout),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(
@@ -118,8 +118,12 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> with LocalizationMixin 
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   subtitle: _selectedExercise != null
-                      ? Text(_exerciseRepository.getMuscleGroupTranslation(
-                          context, _selectedExercise!.muscleGroup ?? ''))
+                      ? Text(
+                          _exerciseRepository.getMuscleGroupTranslation(
+                            context,
+                            _selectedExercise!.muscleGroup ?? '',
+                          ),
+                        )
                       : null,
                   trailing: const Icon(Icons.chevron_right),
                   onTap: _selectExercise,

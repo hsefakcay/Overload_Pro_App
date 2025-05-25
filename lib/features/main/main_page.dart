@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker_app/core/router/app_routes.dart';
-import 'package:weight_tracker_app/core/widgets/custom_bottom_nav_bar.dart';
+import 'package:overload_pro_app/core/router/app_routes.dart';
+import 'package:overload_pro_app/core/widgets/custom_bottom_nav_bar.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({required this.child, super.key});
