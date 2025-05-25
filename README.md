@@ -52,12 +52,12 @@ lib/
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/weight-tracker-app.git
+git clone https://github.com/yourusername/overload_pro_app.git
 ```
 
 2. Navigate to project directory
 ```bash
-cd weight-tracker-app
+cd overload_pro_app
 ```
 
 3. Install dependencies
@@ -134,9 +134,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Authors
-
-- Your Name - Initial work
 
 ## 🙏 Acknowledgments
 
