@@ -1,6 +1,6 @@
-# Weight Tracker App 💪
+# Overload Pro App 💪
 
-A modern Flutter application designed to help fitness enthusiasts track their workout progress, manage exercises, and achieve their fitness goals effectively.
+A modern Flutter application designed to help fitness enthusiasts track their workout progress, apply progressive overload, manage exercises, and achieve their fitness goals effectively.
 
 ## ✨ Features
 
@@ -26,23 +26,12 @@ lib/
 │   └── widgets/
 ├── features/
 │   ├── exercise/
-│   │   ├── presentation/
-│   │   └── widgets/
 │   ├── history/
-│   │   ├── presentation/
-│   │   └── widgets/
 │   ├── main/
-│   │   ├── presentation/
-│   │   └── widgets/
 │   ├── profile/
-│   │   ├── presentation/
-│   │   └── widgets/
 │   ├── splash/
-│   │   ├── presentation/
-│   │   └── widgets/
 │   └── workout/
-│       ├── presentation/
-│       └── widgets/
+│  
 └── product/
     ├── database/
     ├── di/
@@ -83,24 +72,31 @@ flutter run
 
 ## 📦 Dependencies
 
-- **State Management**: 
-  - flutter_bloc: ^8.1.3
+- **State Management**:  
+  - flutter_bloc: ^8.1.3  
   - equatable: ^2.0.5
 
-- **Dependency Injection**:
+- **Dependency Injection**:  
   - get_it: ^7.6.0
 
-- **Local Storage**:
-  - hive: ^2.2.3
-  - hive_flutter: ^1.1.0
+- **Local Storage**:  
+  - shared_preferences: ^2.2.2  
+  - sqflite: ^2.3.0  
+  - path_provider: ^2.1.1  
+  - path: ^1.8.3
 
-- **UI Components**:
-  - flutter_svg: ^2.0.7
-  - google_fonts: ^5.1.0
+- **Charts**:  
+  - fl_chart: ^0.71.0
 
-- **Utilities**:
-  - intl: ^0.18.1
-  - logger: ^2.0.1
+- **Utilities**:  
+  - intl: ^0.20.2  
+  - uuid: ^4.2.1  
+  - logger: ^2.5.0
+
+- **Localization**:  
+  - flutter_localizations (SDK)  
+  - intl  
+  - flutter_intl config enabled
 
 ## 🛠️ Development
 
