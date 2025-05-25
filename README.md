@@ -24,6 +24,7 @@ lib/
 │   ├── router/
 │   ├── theme/
 │   └── widgets/
+|
 ├── features/
 │   ├── exercise/
 │   ├── history/
