@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:overload_pro_app/core/enums/bmi_status_enum.dart';
 import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/core/generated/l10n/app_localizations.dart';
 import 'package:overload_pro_app/product/models/user_profile_model.dart';
 import 'package:overload_pro_app/product/models/weight_record_model.dart';
 
@@ -17,11 +19,12 @@ class WeightSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final latestWeight = weightRecords.isNotEmpty ? weightRecords.first.weight : 0.0;
     final bmi = profile.height > 0
         ? (latestWeight / ((profile.height / 100) * (profile.height / 100)))
         : 0.0;
-    final bmiStatus = _getBMIStatus(bmi);
+    final bmiStatus = BMIStatus.fromBMI(bmi);
     final weightChange = weightRecords.length >= 2 ? latestWeight - weightRecords[1].weight : 0.0;
 
     return Card(
@@ -37,28 +40,31 @@ class WeightSummaryCard extends StatelessWidget {
                 GestureDetector(
                   child: _buildWeightStat(
                     context,
-                    'Güncel Kilo',
-                    '$latestWeight kg',
+                    l10n.currentWeight,
+                    '$latestWeight ${l10n.kg}',
                     Icons.monitor_weight,
                     weightChange,
+                    l10n,
                   ),
                 ),
                 GestureDetector(
                   child: _buildWeightStat(
                     context,
-                    'Hedef Kilo',
-                    '${profile.targetWeight} kg',
+                    l10n.targetWeight,
+                    '${profile.targetWeight} ${l10n.kg}',
                     Icons.track_changes,
                     null,
+                    l10n,
                   ),
                 ),
                 GestureDetector(
                   child: _buildWeightStat(
                     context,
-                    'Boy',
+                    l10n.height,
                     '${profile.height} cm',
                     Icons.height,
                     null,
+                    l10n,
                   ),
                 ),
               ],
@@ -69,7 +75,7 @@ class WeightSummaryCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: _getBMIStatusColor(bmiStatus).withOpacity(0.1),
+                  color: bmiStatus.getColor().withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -77,22 +83,22 @@ class WeightSummaryCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.health_and_safety,
-                      color: _getBMIStatusColor(bmiStatus),
+                      color: bmiStatus.getColor(),
                       size: 20,
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'BMI: ${bmi.toStringAsFixed(1)}',
+                      '${l10n.bmi}: ${bmi.toStringAsFixed(1)}',
                       style: context.titleSmall.copyWith(
-                        color: _getBMIStatusColor(bmiStatus),
+                        color: bmiStatus.getColor(),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      bmiStatus,
+                      bmiStatus.getLocalizedName(l10n),
                       style: context.bodySmall.copyWith(
-                        color: _getBMIStatusColor(bmiStatus),
+                        color: bmiStatus.getColor(),
                       ),
                     ),
                   ],
@@ -111,6 +117,7 @@ class WeightSummaryCard extends StatelessWidget {
     String value,
     IconData icon,
     double? change,
+    AppLocalizations l10n,
   ) {
     return Column(
       children: [
@@ -133,13 +140,13 @@ class WeightSummaryCard extends StatelessWidget {
         ),
         if (change != null) ...[
           const SizedBox(height: 4),
-          _buildWeightChange(context, change),
+          _buildWeightChange(context, change, l10n),
         ],
       ],
     );
   }
 
-  Widget _buildWeightChange(BuildContext context, double change) {
+  Widget _buildWeightChange(BuildContext context, double change, AppLocalizations l10n) {
     final isPositive = change > 0;
     final color = isPositive ? Colors.red : Colors.green;
     final icon = isPositive ? Icons.arrow_upward : Icons.arrow_downward;
@@ -149,32 +156,10 @@ class WeightSummaryCard extends StatelessWidget {
       children: [
         Icon(icon, size: 12, color: color),
         Text(
-          '${change.abs().toStringAsFixed(1)} kg',
+          '${change.abs().toStringAsFixed(1)} ${l10n.kg}',
           style: context.bodySmall.copyWith(color: color),
         ),
       ],
     );
-  }
-
-  String _getBMIStatus(double bmi) {
-    if (bmi < 18.5) return 'Zayıf';
-    if (bmi < 25) return 'Normal';
-    if (bmi < 30) return 'Kilolu';
-    return 'Obez';
-  }
-
-  Color _getBMIStatusColor(String status) {
-    switch (status) {
-      case 'Zayıf':
-        return Colors.orange;
-      case 'Normal':
-        return Colors.green;
-      case 'Kilolu':
-        return Colors.orange;
-      case 'Obez':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
   }
 }

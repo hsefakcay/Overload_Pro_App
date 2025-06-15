@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:overload_pro_app/core/mixins/localization_mixin.dart';
+import 'package:overload_pro_app/core/router/app_routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:overload_pro_app/core/extensions/context_extension.dart';
 import 'package:overload_pro_app/core/generated/l10n/app_localizations.dart';
 import 'package:overload_pro_app/core/theme/theme_bloc.dart';
 import 'package:overload_pro_app/features/workout/presentation/bloc/workout_bloc.dart';
 import 'package:overload_pro_app/features/workout/presentation/bloc/workout_event.dart';
-import 'package:overload_pro_app/features/workout/presentation/bloc/workout_state.dart';
 import 'package:overload_pro_app/product/di/locator.dart';
 import 'package:overload_pro_app/features/profile/bloc/profile_bloc.dart';
 import 'package:overload_pro_app/features/profile/bloc/profile_event.dart';
@@ -14,15 +16,20 @@ import 'package:overload_pro_app/features/profile/presentation/dialogs/profile_d
 import 'package:overload_pro_app/features/profile/presentation/widgets/profile_app_bar.dart';
 import 'package:overload_pro_app/features/profile/presentation/widgets/weight_history_card.dart';
 import 'package:overload_pro_app/features/profile/presentation/widgets/weight_summary_card.dart';
-import 'package:overload_pro_app/features/profile/presentation/widgets/workout_statistics_card.dart';
-import 'dart:async';
+import 'package:overload_pro_app/product/models/user_profile_model.dart';
+import 'package:overload_pro_app/product/models/weight_record_model.dart';
+import 'package:overload_pro_app/features/profile/presentation/screens/edit_profile_page.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> with LocalizationMixin {
+  @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -32,111 +39,215 @@ class ProfilePage extends StatelessWidget {
           create: (context) => WorkoutBloc(locator())..add(LoadWorkouts()),
         ),
       ],
-      child: Scaffold(
-        body: BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            if (state is ProfileLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+      child: const _ProfileView(),
+    );
+  }
+}
 
-            if (state is ProfileError) {
-              return Center(
-                child: Text(
-                  state.message,
-                  style: context.bodyMedium,
-                ),
-              );
-            }
+class _ProfileView extends StatelessWidget {
+  const _ProfileView();
 
-            if (state is ProfileLoaded) {
-              return CustomScrollView(
-                slivers: [
-                  ProfileAppBar(profile: state.profile),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: context.paddingMedium,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          WeightSummaryCard(
-                            profile: state.profile,
-                            weightRecords: state.weightRecords,
-                            onBMITap: (bmi) => _showBMIInfoDialog(context, bmi),
-                          ),
-                          SizedBox(height: context.mediumValue),
-                          Card(
-                            child: ListTile(
-                              leading: const Icon(Icons.edit),
-                              title: const Text('Kişisel Bilgileri Düzenle'),
-                              onTap: () {},
-                            ),
-                          ),
-                          Card(
-                            child: ListTile(
-                              leading: const Icon(Icons.monitor_weight_rounded),
-                              title: const Text('Kilo Takibi'),
-                              onTap: () {},
-                            ),
-                          ),
-                          SizedBox(height: context.lowValue),
-                          BlocBuilder<ThemeBloc, ThemeState>(
-                            builder: (context, themeState) {
-                              return Card(
-                                child: ListTile(
-                                  leading: Icon(
-                                    themeState is ThemeLoaded && themeState.isDarkMode
-                                        ? Icons.dark_mode
-                                        : Icons.light_mode,
-                                  ),
-                                  title: Text(
-                                    themeState is ThemeLoaded && themeState.isDarkMode
-                                        ? 'Dark Mode'
-                                        : 'Light Mode',
-                                  ),
-                                  trailing: Switch(
-                                    value: themeState is ThemeLoaded && themeState.isDarkMode,
-                                    onChanged: (value) {
-                                      context.read<ThemeBloc>().add(ToggleTheme());
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(height: context.lowValue),
-                          BlocBuilder<WorkoutBloc, WorkoutState>(
-                            builder: (context, workoutState) {
-                              if (workoutState is WorkoutLoaded) {
-                                return WorkoutStatisticsCard(
-                                  workoutSets: workoutState.workoutSets,
-                                );
-                              }
-                              return const SizedBox.shrink();
-                            },
-                          ),
-                          SizedBox(height: context.mediumValue),
-                          WeightHistoryCard(
-                            records: state.weightRecords,
-                            profile: state.profile,
-                            onDeleteRecord: (id) =>
-                                context.read<ProfileBloc>().add(DeleteWeightRecord(id)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return const _LoadingView();
+          }
 
-            return const SizedBox.shrink();
-          },
-        ),
+          if (state is ProfileError) {
+            return _ErrorView(message: state.message);
+          }
+
+          if (state is ProfileLoaded) {
+            return _ProfileContent(
+              profile: state.profile,
+              weightRecords: state.weightRecords,
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
       ),
+    );
+  }
+}
+
+class _LoadingView extends StatelessWidget {
+  const _LoadingView();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: CircularProgressIndicator());
+  }
+}
+
+class _ErrorView extends StatelessWidget {
+  const _ErrorView({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        message,
+        style: context.bodyMedium,
+      ),
+    );
+  }
+}
+
+class _ProfileContent extends StatelessWidget {
+  const _ProfileContent({
+    required this.profile,
+    required this.weightRecords,
+  });
+
+  final UserProfileModel profile;
+  final List<WeightRecordModel> weightRecords;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        ProfileAppBar(profile: profile),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: context.paddingMedium,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                WeightSummaryCard(
+                  profile: profile,
+                  weightRecords: weightRecords,
+                  onBMITap: (bmi) => _showBMIInfoDialog(context, bmi),
+                ),
+                SizedBox(height: context.mediumValue),
+                _ProfileActions(profile: profile),
+                SizedBox(height: context.mediumValue),
+                WeightHistoryCard(
+                  records: weightRecords,
+                  profile: profile,
+                  onDeleteRecord: (id) => context.read<ProfileBloc>().add(DeleteWeightRecord(id)),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   void _showBMIInfoDialog(BuildContext context, double bmi) {
     ProfileDialogs.showBMIInfoDialog(context, bmi);
+  }
+}
+
+class _ProfileActions extends StatelessWidget {
+  const _ProfileActions({required this.profile});
+  final UserProfileModel profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Column(
+      children: [
+        _ProfileActionCard(
+          icon: Icons.edit,
+          title: l10n.editPersonalInfo,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => BlocProvider.value(
+                  value: context.read<ProfileBloc>(),
+                  child: EditProfilePage(
+                    initialName: profile.name,
+                    initialWeight: profile.targetWeight,
+                    initialHeight: profile.height,
+                    initialPhotoUrl: profile.photoUrl,
+                    initialTargetWeight: profile.targetWeight,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+        _ProfileActionCard(
+          icon: Icons.monitor_weight_rounded,
+          title: l10n.weightTracking,
+          onTap: () {},
+        ),
+        _ProfileActionCard(
+          icon: Icons.bar_chart_outlined,
+          title: l10n.statistics,
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutes.workoutStatistics);
+          },
+        ),
+        const _ThemeToggleCard(),
+        _ProfileActionCard(
+          icon: Icons.privacy_tip_outlined,
+          title: l10n.privacyPolicy,
+          onTap: _launchPrivacyPolicy,
+        ),
+      ],
+    );
+  }
+
+  Future<void> _launchPrivacyPolicy() async {
+    final url = Uri.parse('https://hsefakcay.github.io/');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    }
+  }
+}
+
+class _ProfileActionCard extends StatelessWidget {
+  const _ProfileActionCard({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(title),
+        onTap: onTap,
+      ),
+    );
+  }
+}
+
+class _ThemeToggleCard extends StatelessWidget {
+  const _ThemeToggleCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, themeState) {
+        final isDarkMode = themeState is ThemeLoaded && themeState.isDarkMode;
+        return Card(
+          child: ListTile(
+            leading: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
+            title: Text(isDarkMode ? l10n.darkMode : l10n.lightMode),
+            trailing: Switch(
+              value: isDarkMode,
+              onChanged: (_) => context.read<ThemeBloc>().add(ToggleTheme()),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

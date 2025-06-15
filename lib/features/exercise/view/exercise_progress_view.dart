@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:overload_pro_app/core/mixins/localization_mixin.dart';
 import 'package:overload_pro_app/product/models/set_model.dart';
 import 'package:overload_pro_app/core/extensions/context_extension.dart';
 import 'package:overload_pro_app/features/exercise/widgets/exercise_progress_chart.dart';
@@ -7,7 +8,7 @@ import 'package:overload_pro_app/features/workout/presentation/bloc/workout_bloc
 import 'package:overload_pro_app/features/workout/presentation/bloc/workout_state.dart';
 import 'package:overload_pro_app/features/workout/presentation/bloc/workout_event.dart';
 
-class ExerciseProgressView extends StatelessWidget {
+class ExerciseProgressView extends StatefulWidget {
   const ExerciseProgressView({
     required this.exerciseId,
     required this.exerciseName,
@@ -17,10 +18,15 @@ class ExerciseProgressView extends StatelessWidget {
   final String exerciseName;
 
   @override
+  State<ExerciseProgressView> createState() => _ExerciseProgressViewState();
+}
+
+class _ExerciseProgressViewState extends State<ExerciseProgressView> with LocalizationMixin {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(exerciseName),
+        title: Text(widget.exerciseName),
       ),
       body: BlocBuilder<WorkoutBloc, WorkoutState>(
         builder: (context, state) {
@@ -44,12 +50,12 @@ class ExerciseProgressView extends StatelessWidget {
 
           if (state is WorkoutLoaded) {
             final exerciseWorkouts =
-                state.workoutSets.where((set) => set.exercise.name == exerciseName).toList();
+                state.workoutSets.where((set) => set.exercise.name == widget.exerciseName).toList();
 
             if (exerciseWorkouts.isEmpty) {
               return Center(
                 child: Text(
-                  'Bu egzersiz için henüz kayıtlı antrenman bulunmuyor.',
+                  l10n.noWorkoutsDetail,
                   style: context.bodyMedium,
                 ),
               );
@@ -67,7 +73,7 @@ class ExerciseProgressView extends StatelessWidget {
                         children: [
                           ExerciseProgressChart(
                             progressData: exerciseWorkouts,
-                            exerciseName: exerciseName,
+                            exerciseName: widget.exerciseName,
                           ),
                           Expanded(
                             child: Padding(
@@ -106,7 +112,7 @@ class ExerciseProgressView extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 8),
                                           Text(
-                                            'Son Antrenman Detayları',
+                                            l10n.lastWorkoutDetails,
                                             style: context.titleMedium.copyWith(
                                               fontWeight: FontWeight.bold,
                                               color: Theme.of(context).colorScheme.primary,
@@ -121,19 +127,19 @@ class ExerciseProgressView extends StatelessWidget {
                                         children: [
                                           _buildDetailRow(
                                             context,
-                                            'Ağırlık',
-                                            '${exerciseWorkouts.last.weight} kg',
+                                            l10n.weight,
+                                            '${exerciseWorkouts.last.weight} ${l10n.kg}',
                                             Icons.monitor_weight_outlined,
                                           ),
                                           _buildDetailRow(
                                             context,
-                                            'Tekrar',
+                                            l10n.reps,
                                             exerciseWorkouts.last.reps.toString(),
                                             Icons.repeat,
                                           ),
                                           _buildDetailRow(
                                             context,
-                                            'Set Tipi',
+                                            l10n.setType,
                                             exerciseWorkouts.last.setType.displayName,
                                             Icons.category_outlined,
                                           ),

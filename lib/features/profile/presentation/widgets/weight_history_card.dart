@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:overload_pro_app/core/extensions/context_extension.dart';
 import 'package:overload_pro_app/product/models/weight_record_model.dart';
 import 'package:overload_pro_app/product/models/user_profile_model.dart';
+import 'package:overload_pro_app/core/generated/l10n/app_localizations.dart';
 
 class WeightHistoryCard extends StatelessWidget {
   const WeightHistoryCard({
@@ -18,6 +19,8 @@ class WeightHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (records.isEmpty) {
       return Card(
         elevation: 4,
@@ -26,7 +29,7 @@ class WeightHistoryCard extends StatelessWidget {
           padding: context.paddingMedium,
           child: Center(
             child: Text(
-              'Henüz kilo kaydı bulunmuyor',
+              l10n.noWeightRecords,
               style: context.bodyMedium,
             ),
           ),
@@ -43,7 +46,7 @@ class WeightHistoryCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Kilo Geçmişi',
+              l10n.weightHistory,
               style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -64,7 +67,7 @@ class WeightHistoryCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Hedef Kilo: ${profile.targetWeight.toStringAsFixed(1)} kg',
+                    '${l10n.targetWeight}: ${profile.targetWeight.toStringAsFixed(1)} ${l10n.kg}',
                     style: const TextStyle(
                       color: Colors.green,
                       fontWeight: FontWeight.bold,
@@ -104,7 +107,7 @@ class WeightHistoryCard extends StatelessWidget {
                     ),
                   ),
                   title: Text(
-                    '${record.weight.toStringAsFixed(1)} kg',
+                    '${record.weight.toStringAsFixed(1)} ${l10n.kg}',
                     style: context.titleSmall.copyWith(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
@@ -135,7 +138,7 @@ class WeightHistoryCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                '${weightChange.abs().toStringAsFixed(1)} kg',
+                                '${weightChange.abs().toStringAsFixed(1)} ${l10n.kg}',
                                 style: context.bodySmall.copyWith(
                                   color: isPositive ? Colors.red : Colors.green,
                                   fontWeight: FontWeight.bold,
@@ -161,6 +164,7 @@ class WeightHistoryCard extends StatelessWidget {
   }
 
   LineChartData _createLineChartData(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final spots = <FlSpot>[];
     final targetSpots = <FlSpot>[];
     final targetWeight = profile.targetWeight;
@@ -272,8 +276,8 @@ class WeightHistoryCard extends StatelessWidget {
               final isTarget = spot.barIndex == 0;
               return LineTooltipItem(
                 isTarget
-                    ? 'Hedef: ${spot.y.toStringAsFixed(1)} kg'
-                    : '${spot.y.toStringAsFixed(1)} kg',
+                    ? '${l10n.targetWeight}: ${spot.y.toStringAsFixed(1)} ${l10n.kg}'
+                    : '${spot.y.toStringAsFixed(1)} ${l10n.kg}',
                 TextStyle(
                   color: isTarget ? Colors.green : Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,

@@ -39,7 +39,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get categoryLabel => 'Kategori';
 
   @override
-  String get appName => 'Weight Tracker';
+  String get appName => 'Overload Pro';
 
   @override
   String get save => 'Kaydet';
@@ -144,7 +144,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get totalWorkouts => 'Toplam Antrenman';
 
   @override
-  String get mostUsedExercise => 'En Çok Kullanılan Hareket';
+  String get mostUsedExercise => 'En Çok Yapılan Hareket';
 
   @override
   String get maxWeight => 'En Yüksek Ağırlık';
@@ -204,4 +204,51 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get personalInfo => 'Kişisel Bilgiler';
+
+  @override
+  String get weightTracking => 'Kilo Takibi';
+
+  @override
+  String get darkMode => 'Karanlık Mod';
+
+  @override
+  String get lightMode => 'Aydınlık Mod';
+
+  @override
+  String get privacyPolicy => 'Gizlilik Politikası';
+
+  @override
+  String get lastWorkoutDetails => 'Son Antrenman Detayları';
+
+  @override
+  String progressChart(String exerciseName) {
+    return '$exerciseName İlerleme Grafiği';
+  }
+
+  @override
+  String get highest => 'En Yüksek';
+
+  @override
+  String get lowest => 'En Düşük';
+
+  @override
+  String get bmi => 'BMI';
+
+  @override
+  String get bmiUnderweight => 'Zayıf';
+
+  @override
+  String get bmiNormal => 'Normal';
+
+  @override
+  String get bmiOverweight => 'Kilolu';
+
+  @override
+  String get bmiObese => 'Obez';
+
+  @override
+  String get weightHistory => 'Kilo Geçmişi';
+
+  @override
+  String get noWeightRecords => 'Kilo kaydı bulunamadı';
 }

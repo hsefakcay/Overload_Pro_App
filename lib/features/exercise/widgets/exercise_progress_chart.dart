@@ -48,7 +48,7 @@ class _ExerciseProgressChartState extends State<ExerciseProgressChart> with Loca
         Padding(
           padding: context.paddingLow,
           child: Text(
-            '${widget.exerciseName} İlerleme Grafiği',
+            l10n.progressChart(widget.exerciseName),
             style: context.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.primary,
@@ -194,8 +194,8 @@ class _ExerciseProgressChartState extends State<ExerciseProgressChart> with Loca
                         final index = spot.x.toInt();
                         final setData = sortedData[index];
                         return LineTooltipItem(
-                          '${setData.weight.toStringAsFixed(1)} kg\n'
-                          '${setData.reps} tekrar\n'
+                          '${setData.weight.toStringAsFixed(1)} ${l10n.kg}\n'
+                          '${setData.reps} ${l10n.repFormat}\n'
                           '${setData.setType.displayName}',
                           context.bodySmall.copyWith(
                             color: Theme.of(context).colorScheme.onTertiary,
@@ -242,7 +242,7 @@ class _ExerciseProgressChartState extends State<ExerciseProgressChart> with Loca
                 Column(
                   children: [
                     Text(
-                      'En Yüksek',
+                      l10n.highest,
                       style: context.bodySmall.copyWith(
                         color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
                       ),
@@ -264,7 +264,7 @@ class _ExerciseProgressChartState extends State<ExerciseProgressChart> with Loca
                 Column(
                   children: [
                     Text(
-                      'En Düşük',
+                      l10n.lowest,
                       style: context.bodySmall.copyWith(
                         color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
                       ),

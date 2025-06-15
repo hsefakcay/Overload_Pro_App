@@ -27,8 +27,10 @@ dependencies:
   uuid: ^4.2.1 # Unique ID generation
   fl_chart: ^0.71.0
   shared_preferences: ^2.2.2 # Local storage
+  url_launcher: ^6.2.4 # URL handling
   flutter_localizations:
     sdk: flutter
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

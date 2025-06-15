@@ -249,7 +249,7 @@
     },
     "editPersonalInfo": "Edit Personal Info",
     "@editPersonalInfo": {
-        "description": "Button text for editing personal information"
+        "description": "Label for editing personal information"
     },
     "currentWeight": "Current Weight",
     "@currentWeight": {
@@ -266,5 +266,71 @@
     "personalInfo": "Personal Info",
     "@personalInfo": {
         "description": "Title for personal information section"
+    },
+    "weightTracking": "Weight Tracking",
+    "@weightTracking": {
+        "description": "Label for weight tracking section"
+    },
+    "darkMode": "Dark Mode",
+    "@darkMode": {
+        "description": "Label for dark mode option"
+    },
+    "lightMode": "Light Mode",
+    "@lightMode": {
+        "description": "Label for light mode option"
+    },
+    "privacyPolicy": "Privacy Policy",
+    "@privacyPolicy": {
+        "description": "Label for privacy policy link"
+    },
+    "lastWorkoutDetails": "Last Workout Details",
+    "@lastWorkoutDetails": {
+        "description": "Title for the last workout details section"
+    },
+    "progressChart": "{exerciseName} Progress Chart",
+    "@progressChart": {
+        "description": "Title for the exercise progress chart",
+        "placeholders": {
+            "exerciseName": {
+                "type": "String",
+                "example": "Bench Press"
+            }
+        }
+    },
+    "highest": "Highest",
+    "@highest": {
+        "description": "Label for highest weight"
+    },
+    "lowest": "Lowest",
+    "@lowest": {
+        "description": "Label for lowest weight"
+    },
+    "bmi": "BMI",
+    "@bmi": {
+        "description": "Label for Body Mass Index"
+    },
+    "bmiUnderweight": "Underweight",
+    "@bmiUnderweight": {
+        "description": "BMI status for underweight"
+    },
+    "bmiNormal": "Normal",
+    "@bmiNormal": {
+        "description": "BMI status for normal weight"
+    },
+    "bmiOverweight": "Overweight",
+    "@bmiOverweight": {
+        "description": "BMI status for overweight"
+    },
+    "bmiObese": "Obese",
+    "@bmiObese": {
+        "description": "BMI status for obese"
+    },
+    "weightHistory": "Weight History",
+    "@weightHistory": {
+        "description": "Title for weight history section"
+    },
+    "noWeightRecords": "No weight records found",
+    "@noWeightRecords": {
+        "description": "Message shown when no weight records are available"
     }
 } 

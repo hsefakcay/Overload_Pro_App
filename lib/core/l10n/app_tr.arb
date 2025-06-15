@@ -1,5 +1,5 @@
 {
-    "appName": "Weight Tracker",
+    "appName": "Overload Pro",
     "save": "Kaydet",
     "cancel": "İptal",
     "delete": "Sil",
@@ -34,7 +34,7 @@
     "profileTitle": "Profil",
     "statistics": "İstatistikler",
     "totalWorkouts": "Toplam Antrenman",
-    "mostUsedExercise": "En Çok Kullanılan Hareket",
+    "mostUsedExercise": "En Çok Yapılan Hareket",
     "maxWeight": "En Yüksek Ağırlık",
     "requiredField": "Bu alan zorunludur",
     "enterValidNumber": "Lütfen geçerli bir sayı girin",
@@ -62,5 +62,20 @@
     "currentWeight": "Güncel Kilo",
     "targetWeight": "Hedef Kilo",
     "height": "Boy",
-    "personalInfo": "Kişisel Bilgiler"
+    "personalInfo": "Kişisel Bilgiler",
+    "weightTracking": "Kilo Takibi",
+    "darkMode": "Karanlık Mod",
+    "lightMode": "Aydınlık Mod",
+    "privacyPolicy": "Gizlilik Politikası",
+    "lastWorkoutDetails": "Son Antrenman Detayları",
+    "progressChart": "{exerciseName} İlerleme Grafiği",
+    "highest": "En Yüksek",
+    "lowest": "En Düşük",
+    "bmi": "BMI",
+    "bmiUnderweight": "Zayıf",
+    "bmiNormal": "Normal",
+    "bmiOverweight": "Kilolu",
+    "bmiObese": "Obez",
+    "weightHistory": "Kilo Geçmişi",
+    "noWeightRecords": "Kilo kaydı bulunamadı"
 } 

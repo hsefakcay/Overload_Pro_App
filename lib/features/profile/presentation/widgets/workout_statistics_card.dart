@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:overload_pro_app/core/extensions/context_extension.dart';
+import 'package:overload_pro_app/core/mixins/localization_mixin.dart';
 import 'package:overload_pro_app/product/models/set_model.dart';
 import 'package:overload_pro_app/features/exercise/data/repositories/exercise_repository.dart';
 
-class WorkoutStatisticsCard extends StatelessWidget {
+class WorkoutStatisticsCard extends StatefulWidget {
   const WorkoutStatisticsCard({
     required this.workoutSets,
     super.key,
@@ -12,9 +13,14 @@ class WorkoutStatisticsCard extends StatelessWidget {
   final List<SetModel> workoutSets;
 
   @override
+  State<WorkoutStatisticsCard> createState() => _WorkoutStatisticsCardState();
+}
+
+class _WorkoutStatisticsCardState extends State<WorkoutStatisticsCard> with LocalizationMixin {
+  @override
   Widget build(BuildContext context) {
     final exerciseRepository = ExerciseRepository();
-    final exerciseStats = _calculateExerciseStats(workoutSets);
+    final exerciseStats = _calculateExerciseStats(widget.workoutSets);
 
     return Card(
       elevation: 4,
@@ -24,11 +30,6 @@ class WorkoutStatisticsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Antrenman İstatistikleri',
-              style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
             _buildMostFrequentExercises(context, exerciseStats),
             const SizedBox(height: 16),
             _buildHighestWeights(context, exerciseStats),
@@ -51,7 +52,7 @@ class WorkoutStatisticsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'En Çok Yapılan Egzersizler',
+          l10n.mostUsedExercise,
           style: context.titleSmall.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
@@ -99,7 +100,7 @@ class WorkoutStatisticsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'En Yüksek Ağırlıklar',
+          l10n.maxWeight,
           style: context.titleSmall.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
@@ -157,7 +158,7 @@ class WorkoutStatisticsCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Kas Grubu Dağılımı',
+          l10n.categoryLabel,
           style: context.titleSmall.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),

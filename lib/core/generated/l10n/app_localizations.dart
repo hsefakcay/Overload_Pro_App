@@ -452,7 +452,7 @@ abstract class AppLocalizations {
   /// **'Total: {count}'**
   String totalSets(int count);
 
-  /// Button text for editing personal information
+  /// Label for editing personal information
   ///
   /// In en, this message translates to:
   /// **'Edit Personal Info'**
@@ -481,6 +481,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Personal Info'**
   String get personalInfo;
+
+  /// Label for weight tracking section
+  ///
+  /// In en, this message translates to:
+  /// **'Weight Tracking'**
+  String get weightTracking;
+
+  /// Label for dark mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// Label for light mode option
+  ///
+  /// In en, this message translates to:
+  /// **'Light Mode'**
+  String get lightMode;
+
+  /// Label for privacy policy link
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// Title for the last workout details section
+  ///
+  /// In en, this message translates to:
+  /// **'Last Workout Details'**
+  String get lastWorkoutDetails;
+
+  /// Title for the exercise progress chart
+  ///
+  /// In en, this message translates to:
+  /// **'{exerciseName} Progress Chart'**
+  String progressChart(String exerciseName);
+
+  /// Label for highest weight
+  ///
+  /// In en, this message translates to:
+  /// **'Highest'**
+  String get highest;
+
+  /// Label for lowest weight
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest'**
+  String get lowest;
+
+  /// Label for Body Mass Index
+  ///
+  /// In en, this message translates to:
+  /// **'BMI'**
+  String get bmi;
+
+  /// BMI status for underweight
+  ///
+  /// In en, this message translates to:
+  /// **'Underweight'**
+  String get bmiUnderweight;
+
+  /// BMI status for normal weight
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get bmiNormal;
+
+  /// BMI status for overweight
+  ///
+  /// In en, this message translates to:
+  /// **'Overweight'**
+  String get bmiOverweight;
+
+  /// BMI status for obese
+  ///
+  /// In en, this message translates to:
+  /// **'Obese'**
+  String get bmiObese;
+
+  /// Title for weight history section
+  ///
+  /// In en, this message translates to:
+  /// **'Weight History'**
+  String get weightHistory;
+
+  /// Message shown when no weight records are available
+  ///
+  /// In en, this message translates to:
+  /// **'No weight records found'**
+  String get noWeightRecords;
 }
 
 class _AppLocalizationsDelegate

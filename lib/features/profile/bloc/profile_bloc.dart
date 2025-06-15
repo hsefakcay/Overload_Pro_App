@@ -1,29 +1,39 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
-import '../../../product/models/user_profile_model.dart';
-import '../../../product/models/weight_record_model.dart';
-import '../repositories/profile_repository.dart';
-import 'profile_event.dart';
-import 'profile_state.dart';
+import 'package:overload_pro_app/product/models/user_profile_model.dart';
+import 'package:overload_pro_app/product/models/weight_record_model.dart';
+import 'package:overload_pro_app/features/profile/repositories/profile_repository.dart';
+import 'package:overload_pro_app/features/profile/bloc/profile_event.dart';
+import 'package:overload_pro_app/features/profile/bloc/profile_state.dart';
 
+/// Profil yönetimi için BLoC sınıfı
+/// Kullanıcı profilini ve kilo kayıtlarını yönetir
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final _uuid = const Uuid();
-  final ProfileRepository _repository;
-  UserProfileModel? _profile;
-  List<WeightRecordModel> _weightRecords = [];
-
   ProfileBloc(this._repository) : super(ProfileInitial()) {
+    // Event handler'ları tanımlama
     on<LoadProfile>(_onLoadProfile);
     on<UpdateProfile>(_onUpdateProfile);
     on<AddWeightRecord>(_onAddWeightRecord);
     on<DeleteWeightRecord>(_onDeleteWeightRecord);
   }
+  // Benzersiz ID oluşturmak için UUID kütüphanesi
+  final _uuid = const Uuid();
+  // Profil verilerini yönetmek için repository
+  final ProfileRepository _repository;
+  // Mevcut kullanıcı profili
+  UserProfileModel? _profile;
+  // Kullanıcının kilo kayıtları listesi
+  List<WeightRecordModel> _weightRecords = [];
 
-  void _onLoadProfile(LoadProfile event, Emitter<ProfileState> emit) async {
+  /// Profil bilgilerini yükler
+  /// Eğer profil yoksa varsayılan değerlerle yeni profil oluşturur
+  Future<void> _onLoadProfile(LoadProfile event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileLoading());
 
+      // Profil bilgilerini repository'den al
       _profile = await _repository.getProfile();
+      // Profil yoksa varsayılan değerlerle oluştur
       _profile ??= UserProfileModel(
         id: _uuid.v4(),
         name: 'John Doe',
@@ -32,21 +42,28 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         birthDate: DateTime(1990),
       );
 
+      // Kilo kayıtlarını al
       _weightRecords = await _repository.getWeightRecords();
 
-      emit(ProfileLoaded(
-        profile: _profile!,
-        weightRecords: _weightRecords,
-      ));
+      // Profil yüklendi durumunu bildir
+      emit(
+        ProfileLoaded(
+          profile: _profile!,
+          weightRecords: _weightRecords,
+        ),
+      );
     } catch (e) {
       emit(ProfileError(e.toString()));
     }
   }
 
-  void _onUpdateProfile(UpdateProfile event, Emitter<ProfileState> emit) async {
+  /// Profil bilgilerini günceller
+  /// İsim, boy ve hedef kilo bilgilerini değiştirir
+  Future<void> _onUpdateProfile(UpdateProfile event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileLoading());
 
+      // Profil bilgilerini güncelle
       _profile = _profile?.copyWith(
         name: event.name,
         height: event.height,
@@ -54,21 +71,27 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       );
 
       if (_profile != null) {
+        // Güncellenmiş profili kaydet
         await _repository.saveProfile(_profile!);
-        emit(ProfileLoaded(
-          profile: _profile!,
-          weightRecords: _weightRecords,
-        ));
+        emit(
+          ProfileLoaded(
+            profile: _profile!,
+            weightRecords: _weightRecords,
+          ),
+        );
       }
     } catch (e) {
       emit(ProfileError(e.toString()));
     }
   }
 
-  void _onAddWeightRecord(AddWeightRecord event, Emitter<ProfileState> emit) async {
+  /// Yeni kilo kaydı ekler
+  /// Tarih otomatik olarak şu anki zaman olarak ayarlanır
+  Future<void> _onAddWeightRecord(AddWeightRecord event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileLoading());
 
+      // Yeni kilo kaydı oluştur
       final newRecord = WeightRecordModel(
         id: _uuid.v4(),
         weight: event.weight,
@@ -76,32 +99,40 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         note: event.note,
       );
 
+      // Kaydı ekle ve güncel listeyi al
       await _repository.addWeightRecord(newRecord);
       _weightRecords = await _repository.getWeightRecords();
 
       if (_profile != null) {
-        emit(ProfileLoaded(
-          profile: _profile!,
-          weightRecords: _weightRecords,
-        ));
+        emit(
+          ProfileLoaded(
+            profile: _profile!,
+            weightRecords: _weightRecords,
+          ),
+        );
       }
     } catch (e) {
       emit(ProfileError(e.toString()));
     }
   }
 
-  void _onDeleteWeightRecord(DeleteWeightRecord event, Emitter<ProfileState> emit) async {
+  /// Kilo kaydını siler
+  /// Verilen ID'ye sahip kaydı listeden kaldırır
+  Future<void> _onDeleteWeightRecord(DeleteWeightRecord event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileLoading());
 
+      // Kaydı sil ve güncel listeyi al
       await _repository.deleteWeightRecord(event.recordId);
       _weightRecords = await _repository.getWeightRecords();
 
       if (_profile != null) {
-        emit(ProfileLoaded(
-          profile: _profile!,
-          weightRecords: _weightRecords,
-        ));
+        emit(
+          ProfileLoaded(
+            profile: _profile!,
+            weightRecords: _weightRecords,
+          ),
+        );
       }
     } catch (e) {
       emit(ProfileError(e.toString()));

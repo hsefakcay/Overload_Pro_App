@@ -204,4 +204,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get personalInfo => 'Personal Info';
+
+  @override
+  String get weightTracking => 'Weight Tracking';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get lightMode => 'Light Mode';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get lastWorkoutDetails => 'Last Workout Details';
+
+  @override
+  String progressChart(String exerciseName) {
+    return '$exerciseName Progress Chart';
+  }
+
+  @override
+  String get highest => 'Highest';
+
+  @override
+  String get lowest => 'Lowest';
+
+  @override
+  String get bmi => 'BMI';
+
+  @override
+  String get bmiUnderweight => 'Underweight';
+
+  @override
+  String get bmiNormal => 'Normal';
+
+  @override
+  String get bmiOverweight => 'Overweight';
+
+  @override
+  String get bmiObese => 'Obese';
+
+  @override
+  String get weightHistory => 'Weight History';
+
+  @override
+  String get noWeightRecords => 'No weight records found';
 }
