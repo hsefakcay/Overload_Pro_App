@@ -39,6 +39,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         name: 'John Doe',
         height: 180,
         targetWeight: 70,
+        weight: 70,
         birthDate: DateTime(1990),
       );
 
@@ -58,17 +59,32 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   /// Profil bilgilerini günceller
-  /// İsim, boy ve hedef kilo bilgilerini değiştirir
+  /// İsim, boy, hedef kilo, kilo ve fotoğraf bilgilerini değiştirir
   Future<void> _onUpdateProfile(UpdateProfile event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileLoading());
 
       // Profil bilgilerini güncelle
+      final oldWeight = _profile?.weight ?? 0;
       _profile = _profile?.copyWith(
         name: event.name,
         height: event.height,
         targetWeight: event.targetWeight,
+        weight: event.weight,
+        photoUrl: event.photoUrl,
       );
+
+      // Eğer kilo değiştiyse ve yeni kilo sıfırdan büyükse, her seferinde yeni kayıt ekle
+      final now = DateTime.now();
+      if (event.weight > 0 && event.weight != oldWeight) {
+        final newRecord = WeightRecordModel(
+          id: _uuid.v4(),
+          weight: event.weight,
+          date: now,
+        );
+        await _repository.addWeightRecord(newRecord);
+        _weightRecords = await _repository.getWeightRecords();
+      }
 
       if (_profile != null) {
         // Güncellenmiş profili kaydet

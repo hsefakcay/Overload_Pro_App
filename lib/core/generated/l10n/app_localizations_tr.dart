@@ -147,7 +147,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get mostUsedExercise => 'En Çok Yapılan Hareket';
 
   @override
-  String get maxWeight => 'En Yüksek Ağırlık';
+  String get maxWeight => 'En Yüksek Kilo';
 
   @override
   String get requiredField => 'Bu alan zorunludur';
@@ -251,4 +251,29 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get noWeightRecords => 'Kilo kaydı bulunamadı';
+
+  @override
+  String get targetReached => 'Tebrikler! Hedef kilona ulaştın!';
+
+  @override
+  String kgToTarget(Object kg) {
+    return 'Hedefe $kg kg kaldı, devam et!';
+  }
+
+  @override
+  String belowTarget(Object kg) {
+    return 'Hedefinin $kg kg altındasın! Harika!';
+  }
+
+  @override
+  String get minWeight => 'En Düşük Kilo';
+
+  @override
+  String get biggestLoss => 'En Büyük Kilo Kaybı';
+
+  @override
+  String get biggestGain => 'En Büyük Kilo Artışı';
+
+  @override
+  String get seeWeightHistory => 'Kilo geçmişini görüntüle';
 }

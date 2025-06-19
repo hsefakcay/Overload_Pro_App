@@ -68,9 +68,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
               name: _nameController.text,
               height: double.tryParse(_heightController.text) ?? 0,
               targetWeight: double.tryParse(_targetWeightController.text) ?? 0,
+              weight: double.tryParse(_weightController.text) ?? 0,
+              photoUrl: _pickedImage?.path ?? widget.initialPhotoUrl,
             ),
           );
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     }
   }
 

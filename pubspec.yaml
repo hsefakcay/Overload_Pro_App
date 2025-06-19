@@ -45,6 +45,14 @@ flutter:
 
   assets:
     - assets/images/
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Regular.ttf
+        - asset: assets/fonts/Inter/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter/Inter-Bold.ttf
+          weight: 700
 
 flutter_intl:
   enabled: true

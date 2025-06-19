@@ -147,7 +147,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mostUsedExercise => 'Most Used Exercise';
 
   @override
-  String get maxWeight => 'Max Weight';
+  String get maxWeight => 'Highest Weight';
 
   @override
   String get requiredField => 'This field is required';
@@ -251,4 +251,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noWeightRecords => 'No weight records found';
+
+  @override
+  String get targetReached =>
+      'Congratulations! You have reached your target weight!';
+
+  @override
+  String kgToTarget(Object kg) {
+    return '$kg kg left to your target, keep going!';
+  }
+
+  @override
+  String belowTarget(Object kg) {
+    return 'You are $kg kg below your target! Awesome!';
+  }
+
+  @override
+  String get minWeight => 'Lowest Weight';
+
+  @override
+  String get biggestLoss => 'Biggest Weight Loss';
+
+  @override
+  String get biggestGain => 'Biggest Weight Gain';
+
+  @override
+  String get seeWeightHistory => 'View weight history';
 }

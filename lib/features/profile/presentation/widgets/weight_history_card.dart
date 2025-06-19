@@ -20,11 +20,13 @@ class WeightHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (records.isEmpty) {
       return Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        color: isDark ? const Color(0xFF23272F) : null,
         child: Padding(
           padding: context.paddingMedium,
           child: Center(
@@ -40,130 +42,279 @@ class WeightHistoryCard extends StatelessWidget {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: context.paddingMedium,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l10n.weightHistory,
-              style: context.titleMedium.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.green.withOpacity(0.3)),
+      color: isDark ? const Color(0xFF23272F) : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Modern başlık ve gradient arka plan
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: isDark
+                  ? const LinearGradient(
+                      colors: [Color(0xFF23272F), Color(0xFF2C313A)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    )
+                  : LinearGradient(
+                      colors: [
+                        Theme.of(context).primaryColor,
+                        Theme.of(context).primaryColor.withOpacity(0.7),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.track_changes,
-                    color: Colors.green,
-                    size: 16,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            child: Row(
+              children: [
+                const Icon(Icons.show_chart, color: Colors.white, size: 28),
+                const SizedBox(width: 12),
+                Text(
+                  l10n.weightHistory,
+                  style: context.titleMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '${l10n.targetWeight}: ${profile.targetWeight.toStringAsFixed(1)} ${l10n.kg}',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: context.paddingMedium,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Motivasyon/Başarı Mesajı
+                if (records.isNotEmpty) _buildMotivationMessage(context, l10n),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: isDark ? Colors.green.withOpacity(0.18) : Colors.green.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: isDark ? Colors.green.withOpacity(0.5) : Colors.green.withOpacity(0.3),
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 200,
-              child: LineChart(
-                _createLineChartData(context),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Divider(),
-            const SizedBox(height: 8),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: records.length,
-              itemBuilder: (context, index) {
-                final record = records[index];
-                final previousWeight =
-                    index < records.length - 1 ? records[index + 1].weight : null;
-                final weightChange = previousWeight != null ? record.weight - previousWeight : 0.0;
-                final isPositive = weightChange > 0;
-                final isNegative = weightChange < 0;
-
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
-                    child: Icon(
-                      Icons.monitor_weight,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  title: Text(
-                    '${record.weight.toStringAsFixed(1)} ${l10n.kg}',
-                    style: context.titleSmall.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    '${record.date.day}/${record.date.month}/${record.date.year}',
-                    style: context.bodySmall,
-                  ),
-                  trailing: Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (weightChange != 0)
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: isPositive
-                                ? Colors.red.withOpacity(0.1)
-                                : isNegative
-                                    ? Colors.green.withOpacity(0.1)
-                                    : Colors.grey.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                isPositive ? Icons.arrow_upward : Icons.arrow_downward,
-                                size: 16,
-                                color: isPositive ? Colors.red : Colors.green,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                '${weightChange.abs().toStringAsFixed(1)} ${l10n.kg}',
-                                style: context.bodySmall.copyWith(
-                                  color: isPositive ? Colors.red : Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                      const Icon(
+                        Icons.track_changes,
+                        color: Colors.green,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${l10n.targetWeight}: ${profile.targetWeight.toStringAsFixed(1)} ${l10n.kg}',
+                        style: const TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
                         ),
-                      IconButton(
-                        icon: const Icon(Icons.delete_outline),
-                        onPressed: () => onDeleteRecord(record.id),
-                        color: Colors.red,
                       ),
                     ],
                   ),
-                );
-              },
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  height: 200,
+                  child: LineChart(
+                    _createLineChartData(context, isDark),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Divider(),
+                const SizedBox(height: 8),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: records.length,
+                  itemBuilder: (context, index) {
+                    final record = records[index];
+                    final previousWeight =
+                        index < records.length - 1 ? records[index + 1].weight : null;
+                    final weightChange =
+                        previousWeight != null ? record.weight - previousWeight : 0.0;
+                    final isPositive = weightChange > 0;
+                    final isNegative = weightChange < 0;
+
+                    // En yüksek ve en düşük kilo için rozet
+                    final maxWeight = records.map((e) => e.weight).reduce((a, b) => a > b ? a : b);
+                    final minWeight = records.map((e) => e.weight).reduce((a, b) => a < b ? a : b);
+                    final isMax = record.weight == maxWeight;
+                    final isMin = record.weight == minWeight;
+
+                    // En büyük artış ve azalış için rozet
+                    double maxLoss = 0;
+                    double maxGain = 0;
+                    var maxLossIndex = -1;
+                    var maxGainIndex = -1;
+                    for (var i = 1; i < records.length; i++) {
+                      final diff = records[i - 1].weight - records[i].weight;
+                      if (diff > maxLoss) {
+                        maxLoss = diff;
+                        maxLossIndex = i;
+                      }
+                      final gain = records[i].weight - records[i - 1].weight;
+                      if (gain > maxGain) {
+                        maxGain = gain;
+                        maxGainIndex = i;
+                      }
+                    }
+                    final isMaxLoss = index == maxLossIndex;
+                    final isMaxGain = index == maxGainIndex;
+
+                    // Yüzde değişim
+                    double? percentChange;
+                    if (previousWeight != null && previousWeight != 0) {
+                      percentChange = ((record.weight - previousWeight) / previousWeight) * 100;
+                    }
+
+                    return ListTile(
+                      leading: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                            child: Icon(
+                              Icons.monitor_weight,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          if (isMax)
+                            Tooltip(
+                              message: l10n.maxWeight,
+                              child: const Icon(Icons.emoji_events, color: Colors.amber, size: 18),
+                            ),
+                          if (isMin)
+                            Tooltip(
+                              message: l10n.minWeight ?? 'Min',
+                              child: const Icon(Icons.star, color: Colors.blue, size: 18),
+                            ),
+                          if (isMaxLoss)
+                            Tooltip(
+                              message: l10n.biggestLoss ?? 'Biggest Loss',
+                              child: const Icon(Icons.trending_down, color: Colors.green, size: 18),
+                            ),
+                          if (isMaxGain)
+                            Tooltip(
+                              message: l10n.biggestGain ?? 'Biggest Gain',
+                              child: const Icon(Icons.trending_up, color: Colors.red, size: 18),
+                            ),
+                        ],
+                      ),
+                      title: Text(
+                        '${record.weight.toStringAsFixed(1)} ${l10n.kg}',
+                        style: context.titleSmall.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _formatDate(record.date, context),
+                            style: context.bodySmall,
+                          ),
+                          if (percentChange != null)
+                            Text(
+                              '${percentChange > 0 ? '+' : ''}${percentChange.toStringAsFixed(1)}%',
+                              style: context.bodySmall.copyWith(
+                                color: percentChange > 0 ? Colors.red : Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                        ],
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (weightChange != 0)
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: isPositive
+                                    ? Colors.red.withOpacity(0.1)
+                                    : isNegative
+                                        ? Colors.green.withOpacity(0.1)
+                                        : Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    isPositive ? Icons.arrow_upward : Icons.arrow_downward,
+                                    size: 16,
+                                    color: isPositive ? Colors.red : Colors.green,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '${weightChange.abs().toStringAsFixed(1)} ${l10n.kg}',
+                                    style: context.bodySmall.copyWith(
+                                      color: isPositive ? Colors.red : Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          IconButton(
+                            icon: const Icon(Icons.delete_outline),
+                            onPressed: () => onDeleteRecord(record.id),
+                            color: Colors.red,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  LineChartData _createLineChartData(BuildContext context) {
+  Widget _buildMotivationMessage(BuildContext context, AppLocalizations l10n) {
+    final latestWeight = records.isNotEmpty ? records.first.weight : 0.0;
+    final target = profile.targetWeight;
+    final diff = (latestWeight - target).abs();
+    final reached = latestWeight == target;
+    final lost = latestWeight > target;
+    final left = latestWeight < target;
+    if (reached) {
+      return Text(
+        l10n.targetReached,
+        style: context.titleSmall.copyWith(
+          color: Colors.green,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    } else if (left) {
+      return Text(
+        l10n.kgToTarget(diff.toStringAsFixed(1)),
+        style: context.bodyMedium.copyWith(
+          color: Colors.orange,
+          fontWeight: FontWeight.w600,
+        ),
+      );
+    } else {
+      return Text(
+        l10n.belowTarget(diff.toStringAsFixed(1)),
+        style: context.bodyMedium.copyWith(
+          color: Colors.blue,
+          fontWeight: FontWeight.w600,
+        ),
+      );
+    }
+  }
+
+  LineChartData _createLineChartData(BuildContext context, bool isDark) {
     final l10n = AppLocalizations.of(context)!;
     final spots = <FlSpot>[];
     final targetSpots = <FlSpot>[];
@@ -184,7 +335,7 @@ class WeightHistoryCard extends StatelessWidget {
         horizontalInterval: 5,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: Theme.of(context).dividerColor,
+            color: isDark ? Colors.white12 : Theme.of(context).dividerColor,
             strokeWidth: 1,
             dashArray: [5, 5],
           );
@@ -205,7 +356,7 @@ class WeightHistoryCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
                   '${date.day}/${date.month}',
-                  style: context.bodySmall,
+                  style: context.bodySmall.copyWith(color: isDark ? Colors.white70 : null),
                 ),
               );
             },
@@ -218,7 +369,7 @@ class WeightHistoryCard extends StatelessWidget {
             getTitlesWidget: (value, meta) {
               return Text(
                 value.toInt().toString(),
-                style: context.bodySmall,
+                style: context.bodySmall.copyWith(color: isDark ? Colors.white70 : null),
               );
             },
             reservedSize: 42,
@@ -227,7 +378,7 @@ class WeightHistoryCard extends StatelessWidget {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: Theme.of(context).dividerColor),
+        border: Border.all(color: isDark ? Colors.white12 : Theme.of(context).dividerColor),
       ),
       minX: 0,
       maxX: (spots.length - 1).toDouble(),
@@ -247,14 +398,15 @@ class WeightHistoryCard extends StatelessWidget {
         LineChartBarData(
           spots: spots,
           isCurved: true,
-          color: Theme.of(context).primaryColor,
+          color: Colors.orangeAccent,
           barWidth: 3,
           isStrokeCapRound: true,
           dotData: FlDotData(
             getDotPainter: (spot, percent, barData, index) {
+              final isLast = index == spots.length - 1;
               return FlDotCirclePainter(
-                radius: 4,
-                color: Theme.of(context).primaryColor,
+                radius: isLast ? 6 : 4,
+                color: isLast ? Colors.amber : Colors.orangeAccent,
                 strokeWidth: 2,
                 strokeColor: Colors.white,
               );
@@ -262,7 +414,7 @@ class WeightHistoryCard extends StatelessWidget {
           ),
           belowBarData: BarAreaData(
             show: true,
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            color: Colors.orangeAccent.withOpacity(0.12),
           ),
         ),
       ],
@@ -275,11 +427,9 @@ class WeightHistoryCard extends StatelessWidget {
             return touchedSpots.map((spot) {
               final isTarget = spot.barIndex == 0;
               return LineTooltipItem(
-                isTarget
-                    ? '${l10n.targetWeight}: ${spot.y.toStringAsFixed(1)} ${l10n.kg}'
-                    : '${spot.y.toStringAsFixed(1)} ${l10n.kg}',
+                '${spot.y.toStringAsFixed(1)} ${l10n.kg}',
                 TextStyle(
-                  color: isTarget ? Colors.green : Theme.of(context).primaryColor,
+                  color: isTarget ? Colors.lightGreenAccent : Colors.orangeAccent,
                   fontWeight: FontWeight.bold,
                 ),
               );
@@ -291,11 +441,47 @@ class WeightHistoryCard extends StatelessWidget {
         horizontalLines: [
           HorizontalLine(
             y: targetWeight,
-            color: Colors.green,
-            dashArray: [5, 5],
+            color: Colors.lightGreenAccent,
+            strokeWidth: 3,
+            dashArray: [10, 10],
           ),
         ],
       ),
     );
+  }
+
+  String _formatDate(DateTime date, BuildContext context) {
+    // Türkçe ve İngilizce için ay isimleri
+    final locale = Localizations.localeOf(context).languageCode;
+    final monthsTr = [
+      'Oca',
+      'Şub',
+      'Mar',
+      'Nis',
+      'May',
+      'Haz',
+      'Tem',
+      'Ağu',
+      'Eyl',
+      'Eki',
+      'Kas',
+      'Ara',
+    ];
+    final monthsEn = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    final months = locale == 'tr' ? monthsTr : monthsEn;
+    return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 }

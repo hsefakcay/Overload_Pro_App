@@ -41,7 +41,7 @@ class WeightSummaryCard extends StatelessWidget {
                   child: _buildWeightStat(
                     context,
                     l10n.currentWeight,
-                    '$latestWeight ${l10n.kg}',
+                    '${weightRecords.isNotEmpty ? weightRecords.first.weight : 0.0} ${l10n.kg}',
                     Icons.monitor_weight,
                     weightChange,
                     l10n,

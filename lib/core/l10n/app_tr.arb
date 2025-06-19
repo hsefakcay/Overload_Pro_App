@@ -35,7 +35,7 @@
     "statistics": "İstatistikler",
     "totalWorkouts": "Toplam Antrenman",
     "mostUsedExercise": "En Çok Yapılan Hareket",
-    "maxWeight": "En Yüksek Ağırlık",
+    "maxWeight": "En Yüksek Kilo",
     "requiredField": "Bu alan zorunludur",
     "enterValidNumber": "Lütfen geçerli bir sayı girin",
     "enterValidInteger": "Lütfen geçerli bir tam sayı girin",
@@ -77,5 +77,12 @@
     "bmiOverweight": "Kilolu",
     "bmiObese": "Obez",
     "weightHistory": "Kilo Geçmişi",
-    "noWeightRecords": "Kilo kaydı bulunamadı"
+    "noWeightRecords": "Kilo kaydı bulunamadı",
+    "targetReached": "Tebrikler! Hedef kilona ulaştın!",
+    "kgToTarget": "Hedefe {kg} kg kaldı, devam et!",
+    "belowTarget": "Hedefinin {kg} kg altındasın! Harika!",
+    "minWeight": "En Düşük Kilo",
+    "biggestLoss": "En Büyük Kilo Kaybı",
+    "biggestGain": "En Büyük Kilo Artışı",
+    "seeWeightHistory": "Kilo geçmişini görüntüle"
 } 
