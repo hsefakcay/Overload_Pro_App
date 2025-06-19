@@ -153,7 +153,7 @@
     "@mostUsedExercise": {
         "description": "Label for most used exercise statistic"
     },
-    "maxWeight": "Max Weight",
+    "maxWeight": "Highest Weight",
     "@maxWeight": {
         "description": "Label for maximum weight statistic"
     },
@@ -332,5 +332,12 @@
     "noWeightRecords": "No weight records found",
     "@noWeightRecords": {
         "description": "Message shown when no weight records are available"
-    }
+    },
+    "targetReached": "Congratulations! You have reached your target weight!",
+    "kgToTarget": "{kg} kg left to your target, keep going!",
+    "belowTarget": "You are {kg} kg below your target! Awesome!",
+    "minWeight": "Lowest Weight",
+    "biggestLoss": "Biggest Weight Loss",
+    "biggestGain": "Biggest Weight Gain",
+    "seeWeightHistory": "View weight history"
 } 

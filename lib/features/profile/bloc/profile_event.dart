@@ -10,37 +10,38 @@ abstract class ProfileEvent extends Equatable {
 class LoadProfile extends ProfileEvent {}
 
 class UpdateProfile extends ProfileEvent {
-  final String name;
-  final double height;
-  final double targetWeight;
-
   const UpdateProfile({
     required this.name,
     required this.height,
     required this.targetWeight,
+    required this.weight,
+    this.photoUrl,
   });
+  final String name;
+  final double height;
+  final double targetWeight;
+  final double weight;
+  final String? photoUrl;
 
   @override
-  List<Object?> get props => [name, height, targetWeight];
+  List<Object?> get props => [name, height, targetWeight, weight, photoUrl];
 }
 
 class AddWeightRecord extends ProfileEvent {
-  final double weight;
-  final String? note;
-
   const AddWeightRecord({
     required this.weight,
     this.note,
   });
+  final double weight;
+  final String? note;
 
   @override
   List<Object?> get props => [weight, note];
 }
 
 class DeleteWeightRecord extends ProfileEvent {
-  final String recordId;
-
   const DeleteWeightRecord(this.recordId);
+  final String recordId;
 
   @override
   List<Object?> get props => [recordId];

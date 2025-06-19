@@ -23,7 +23,9 @@ class _HistoryPageState extends State<HistoryPage> with LocalizationMixin {
       appBar: AppBar(
         title: Text(
           l10n.historyTitle,
-          style: context.titleMedium,
+          style: context.titleLarge.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: BlocBuilder<WorkoutBloc, WorkoutState>(

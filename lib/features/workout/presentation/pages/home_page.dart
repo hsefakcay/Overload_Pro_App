@@ -147,22 +147,21 @@ class _HomePageState extends State<HomePage> with LocalizationMixin {
 
   Widget _buildEmptyCategoryView() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 16),
-          Text(
-            l10n.noCategoryWorkouts,
-            style: context.titleMedium.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.w500,
+      child: Padding(
+        padding: context.paddingHigh,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              l10n.noCategoryWorkouts,
+              style: context.titleMedium.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.mediumValue),
-            child: Text(
+            const SizedBox(height: 8),
+            Text(
               _selectedCategory != null
                   ? l10n.noCategoryWorkoutsDetail(_selectedCategory!)
                   : l10n.noWorkoutsDetail,
@@ -171,8 +170,8 @@ class _HomePageState extends State<HomePage> with LocalizationMixin {
               ),
               textAlign: TextAlign.center,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

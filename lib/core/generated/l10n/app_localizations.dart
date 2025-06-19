@@ -377,7 +377,7 @@ abstract class AppLocalizations {
   /// Label for maximum weight statistic
   ///
   /// In en, this message translates to:
-  /// **'Max Weight'**
+  /// **'Highest Weight'**
   String get maxWeight;
 
   /// Validation message for required fields
@@ -571,6 +571,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No weight records found'**
   String get noWeightRecords;
+
+  /// No description provided for @targetReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Congratulations! You have reached your target weight!'**
+  String get targetReached;
+
+  /// No description provided for @kgToTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'{kg} kg left to your target, keep going!'**
+  String kgToTarget(Object kg);
+
+  /// No description provided for @belowTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'You are {kg} kg below your target! Awesome!'**
+  String belowTarget(Object kg);
+
+  /// No description provided for @minWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest Weight'**
+  String get minWeight;
+
+  /// No description provided for @biggestLoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Biggest Weight Loss'**
+  String get biggestLoss;
+
+  /// No description provided for @biggestGain.
+  ///
+  /// In en, this message translates to:
+  /// **'Biggest Weight Gain'**
+  String get biggestGain;
+
+  /// No description provided for @seeWeightHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'View weight history'**
+  String get seeWeightHistory;
 }
 
 class _AppLocalizationsDelegate

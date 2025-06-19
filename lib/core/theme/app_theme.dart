@@ -18,6 +18,7 @@ class AppTheme {
   static ThemeData getLightTheme(BuildContext context) {
     return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Inter',
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryColor,
         primary: primaryColor,
@@ -106,6 +107,7 @@ class AppTheme {
   static ThemeData getDarkTheme(BuildContext context) {
     return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Inter',
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryColor,
         brightness: Brightness.dark,
